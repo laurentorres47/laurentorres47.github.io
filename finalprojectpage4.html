@@ -1,0 +1,167 @@
+<DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Merienda&display=swap">
+    <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Merienda|Roboto&display=swap">
+    <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Londrina+Shadow&display=swap">
+  <style>
+  html{        background-image: url(https://wallpapertag.com/wallpaper/full/f/5/2/476049-vertical-cream-colored-backgrounds-2560x1440-desktop.jpg);
+    padding:0px;margin:0px;
+}
+  body {padding:0px;margin:0px;
+}
+
+  h1{background: #EBCBF7;font-color: white; font-size: 70px; text-align:center; letter-spacing: 20px;font-family: Helvetica; margin:0px auto;padding:0px;font-style: oblique;font-family: 'Londrina Shadow', cursive;}
+  h2{font-size: 20px;font-family: Helvetica; margin:10px auto;padding:0px;font-style: normal;float:right; margin-left: 20%;}
+  h3{font-color: white; font-size: 50px; text-align:center; letter-spacing: 20px;font-family: Helvetica; margin:0px auto;padding:0px;font-style: oblique; margin-left: 20%;border: solid;font-family: 'Londrina Shadow', cursive;}
+  p{font-size: 20px; text-align:center;font-family: Helvetica; font-style: normal; font-weight: bold; letter-spacing: 5px;font-family: 'Merienda', cursive;font-family: 'Roboto', sans-serif;}
+  ul{font-family: Helvetica; font-style: oblique; font-weight: bold;float:right;text-align: center;}
+
+  #center {text-align:center;
+          width: 80%;}
+          #title{text-align: center;
+          width: 55%;top:20%;margin-left: -20%}
+  #wrapper {
+    position: relative;
+    bottom: 63px;
+
+  }
+
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    background-color: #f1f1f1;
+  }
+
+  li a {
+    display: block;
+    color: #000;
+    padding: 8px 16px;
+    text-decoration: none;
+  }
+
+  /* Change the link color on hover */
+  li a:hover {
+    background-color: #555;
+    color: white;
+  }
+  </style>
+  </head>
+
+
+  <script>
+    var request = new XMLHttpRequest();
+  request.open("GET", "https://raw.githubusercontent.com/laurentorres47/GirlsWhoCode-pfizer/master/Top%20College%20Spreadsheet%20-%20Sheet1.csv", false);
+  request.send(null);
+  //THE ARRAY,[College, GPA, SAT],[College,GPA,SAT]
+  var csvData = new Array();
+  var jsonObject = request.responseText.split(/\r?\n|\r/);
+  for (var i = 0; i < jsonObject.length; i++) {
+    csvData.push(jsonObject[i].split(','));
+  }
+  //DO THE ANALYSIS
+  //test loop
+  // for (var i = 0; i < csvData.length; i++) {
+  //     console.log(csvData[i]);
+  // }
+
+  //Filter by GPA
+    function submitGPA() {
+      var SAT = document.getElementById("EnterYourSATScore").value;
+      SAT.innerText = "";
+      var GPA = document.getElementById("EnterYourGPA").value;
+      GPA.innerText = "";
+
+let schoolList="";
+
+ if (GPA!=""&& SAT!=""){
+   for (var i = 0; i < csvData.length; i++) {
+     if (csvData[i][1] <= GPA && csvData[i][2] <= SAT) {
+       console.log(csvData[i][0])
+           schoolList=schoolList+"<div id = 'center'><br>" + csvData[i][0]+"</div>";
+     }
+   }
+   if (schoolList==""){
+     document.getElementById("noschool").innerHTML="<u1>No School Found!</u1>";
+   }
+ }
+  else if (SAT!="") {
+    for (var i = 0; i < csvData.length; i++) {
+      if (csvData[i][2] <= SAT) {
+        console.log(csvData[i][0])
+        schoolList=schoolList+ "<div id = 'center'><br>"+ csvData[i][0]+"</div>";
+    }
+  }
+}
+  else if(GPA!="" ){
+    for (var i = 0; i < csvData.length; i++) {
+      if (csvData[i][1] <= GPA) {
+        schoolList=schoolList+ "<div id = 'center'><br>" + csvData[i][0] + "</div>";
+      }
+    }
+  }
+  else {
+         console.log("try again");
+         console.log(schoolList);
+         document.getElementById("testing").innerHTML="ELSEEEEEEEE";
+  }
+    document.getElementById("testing").innerHTML=schoolList;
+    }
+</script>
+
+
+<body>
+  <h1>COLLEGES FOR GWC</h1>
+  <p><u>Making Coding Accessible for Young Women</u></p>
+
+  <div id = "wrapper">
+    <ul>
+      <li><p>MENU</p></li>
+    <br>
+        <li><a href="finalprojectpage1.html">HOME</a></li>
+        <br>
+        <li><a href="finalprojectpage2.html">TOP COLLEGES FOR COMPUTER SCIENCE</a></li>
+        <br>
+        <li><a href="finalprojectpage3.html">TOP AFFORDABLE COLLEGES FOR COMPUTER SCIENCE</a></li>
+        <br>
+        <li><a href="finalprojectpage4.html">NARROW YOUR CHOICES</a></li>
+      <li><p>MENU</p></li>
+    </ul>
+  </div>
+
+<form>
+<center>
+Enter Your GPA:<input type="text" id="EnterYourGPA"/><br><br>
+Enter Your SAT Score:<input type="text" id="EnterYourSATScore"/><br><br>
+<button type="button" onclick="submitGPA()">Submit</button><br>
+<br>
+<br>
+<div id='title'>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+<h3>LIST OF COLLEGES</h3>
+</div>
+
+
+</center>
+<div id="results"></div>
+</form>
+
+<p id="testing"></p>
+<p id = "EnterYourGPA"></p>
+<p id = "noschool"></p>
+
+</body>
+
+</html>
